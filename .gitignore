@@ -87,5 +87,9 @@ lint-results.xml
 ehthumbs.db
 Thumbs.db
 
-# API folder (separate backend)
-reciclai-api/
+# Backend Node.js
+backend/node_modules/
+backend/.env
+backend/npm-debug.log*
+backend/yarn-debug.log*
+backend/yarn-error.log*

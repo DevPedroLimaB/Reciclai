@@ -1,19 +1,27 @@
 # Reciclai
 
-App de reciclagem desenvolvido em Kotlin.
+Sistema completo de reciclagem com app Android e backend API.
 
-## Setup
+## Estrutura
 
-1. Clone o projeto
-2. Abra no Android Studio
-3. Configure as chaves de API
-4. Execute
+- `/app` - Aplicativo Android (Kotlin)
+- `/backend` - API REST (Node.js)
+
+## Setup Android
+
+1. Abra no Android Studio
+2. Configure as API keys
+3. Execute
+
+## Setup Backend
+
+```bash
+cd backend
+npm install
+npm run dev
+```
 
 ## Stack
 
-- Kotlin
-- Jetpack Compose 
-- MVVM
-- Hilt
-- Retrofit
-- Google Maps
+**Android:** Kotlin, Jetpack Compose, MVVM, Hilt
+**Backend:** Node.js, Express, JWT
