@@ -1,28 +1,19 @@
-# Reciclai Android App
+# Reciclai
 
-Sistema de reciclagem inteligente desenvolvido em Kotlin com Jetpack Compose.
+App de reciclagem desenvolvido em Kotlin.
 
-## Configuração
+## Setup
 
-1. Abra o projeto no Android Studio
-2. Configure as API keys no arquivo `local.properties`
-3. Sincronize o projeto
-4. Execute no dispositivo ou emulador
+1. Clone o projeto
+2. Abra no Android Studio
+3. Configure as chaves de API
+4. Execute
 
-## API Keys Necessárias
-
-- Google Maps API Key
-- Firebase Configuration
-- Backend API URL
-
-## Tecnologias
+## Stack
 
 - Kotlin
-- Jetpack Compose
-- MVVM Architecture
-- Hilt Dependency Injection
+- Jetpack Compose 
+- MVVM
+- Hilt
 - Retrofit
-- Room Database
 - Google Maps
-- Firebase
-- CameraX + ML Kit
