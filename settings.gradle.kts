@@ -5,8 +5,9 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
     repositories {
         google()
         mavenCentral()
@@ -14,4 +15,9 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Reciclai"
-include(":app")
+
+include(":androidApp")
+include(":shared")
+include(":auth-service")
+include(":backend")
+include(":webApp")

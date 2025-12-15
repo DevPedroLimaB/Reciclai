@@ -1,0 +1,98 @@
+services:
+  # Banco de dados PostgreSQL compartilhado
+  postgres:
+    image: postgres:15-alpine
+    container_name: reciclai_db
+    environment:
+      POSTGRES_DB: reciclai
+      POSTGRES_USER: reciclai_user
+      POSTGRES_PASSWORD: reciclai_pass_2024
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8"
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - reciclai_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U reciclai_user -d reciclai"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Microserviço de Autenticação
+  auth-service:
+    build:
+      context: .
+      dockerfile: auth-service/Dockerfile
+    container_name: reciclai_auth_service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/reciclai
+      SPRING_DATASOURCE_USERNAME: reciclai_user
+      SPRING_DATASOURCE_PASSWORD: reciclai_pass_2024
+      SERVER_PORT: 8082
+    ports:
+      - "8082:8082"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - reciclai_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8082/api/auth/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Backend API Principal (Pontos e Conteúdo)
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: reciclai_backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/reciclai
+      SPRING_DATASOURCE_USERNAME: reciclai_user
+      SPRING_DATASOURCE_PASSWORD: reciclai_pass_2024
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SERVER_PORT: 8080
+      AUTH_SERVICE_URL: http://auth-service:8082
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      auth-service:
+        condition: service_healthy
+    networks:
+      - reciclai_network
+    restart: unless-stopped
+
+  # Frontend Web
+  frontend:
+    build:
+      context: .
+      dockerfile: webApp/Dockerfile
+    container_name: reciclai_frontend
+    environment:
+      AUTH_SERVICE_URL: http://localhost:8082
+      API_SERVICE_URL: http://localhost:8080
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+      - auth-service
+    networks:
+      - reciclai_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  reciclai_network:
+    driver: bridge

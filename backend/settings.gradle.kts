@@ -1,0 +1,2 @@
+rootProject.name = "reciclai-backend"
+

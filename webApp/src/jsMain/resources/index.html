@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Reciclai - Transforme o mundo, uma reciclagem por vez">
+    <title>Reciclai - Plataforma de Reciclagem Sustentável</title>
+
+    <!-- Leaflet CSS para mapas (GRATUITO - sem billing) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♻️</text></svg>">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            overflow-x: hidden;
+        }
+        #root {
+            width: 100%;
+            min-height: 100vh;
+        }
+        /* Estilos do mapa Leaflet */
+        .map-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .leaflet-container {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <!-- Leaflet JS para mapas (GRATUITO) -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Script compilado do Kotlin/JS -->
+    <script src="webApp.js"></script>
+</body>
+</html>
